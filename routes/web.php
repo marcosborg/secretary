@@ -28,20 +28,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('dashboard/{month_id}', 'HomeController@dashboard');
     Route::post('dashboard/change_month', 'HomeController@changeMonth');
 
-    Route::prefix('maintenance')->group(function() {
-        Route::get('/', function() {
+    Route::prefix('maintenance')->group(function () {
+        Route::get('/', function () {
             return [];
-        });
-        Route::get('up', function(){
+        }
+        );
+        Route::get('up', function () {
             Artisan::call('up');
             return redirect('/');
-        });
-        Route::get('down', function(){
+        }
+        );
+        Route::get('down', function () {
             $hash = Hash::make(rand());
             Artisan::call('down --secret="' . $hash . '"');
             return redirect('/' . $hash);
-        });
-    });
+        }
+        );
+    }
+    );
 
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -161,5 +165,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
+
+    // Clm Meeting
+    Route::delete('clm-meetings/destroy', 'ClmMeetingController@massDestroy')->name('clm-meetings.massDestroy');
+    Route::resource('clm-meetings', 'ClmMeetingController');
+
+    // Student
+    Route::delete('students/destroy', 'StudentController@massDestroy')->name('students.massDestroy');
+    Route::resource('students', 'StudentController');
+
+    // Assignment
+    Route::delete('assignments/destroy', 'AssignmentController@massDestroy')->name('assignments.massDestroy');
+    Route::resource('assignments', 'AssignmentController');
+
+    // Life Ministry
+    Route::delete('life-ministries/destroy', 'LifeMinistryController@massDestroy')->name('life-ministries.massDestroy');
+    Route::resource('life-ministries', 'LifeMinistryController');
+
+    // Life Ministry Event
+    Route::delete('life-ministry-events/destroy', 'LifeMinistryEventController@massDestroy')->name('life-ministry-events.massDestroy');
+    Route::resource('life-ministry-events', 'LifeMinistryEventController');
 
 });

@@ -49,8 +49,6 @@ return [
             'name_helper'              => ' ',
             'email'                    => 'Email',
             'email_helper'             => ' ',
-            'group'                    => 'Grupo de serviço',
-            'group_helper'             => ' ',
             'email_verified_at'        => 'Email verified at',
             'email_verified_at_helper' => ' ',
             'password'                 => 'Password',
@@ -147,6 +145,8 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted At',
             'deleted_at_helper'  => ' ',
+            'created_by'         => 'Created By',
+            'created_by_helper'  => ' ',
         ],
     ],
     'tasksCalendar' => [
@@ -155,7 +155,7 @@ return [
     ],
     'publisher' => [
         'title'          => 'Publicadores',
-        'title_singular' => 'Publicador',
+        'title_singular' => 'Publicadore',
         'fields'         => [
             'id'                      => 'ID',
             'id_helper'               => ' ',
@@ -197,7 +197,7 @@ return [
     ],
     'group' => [
         'title'          => 'Grupos de serviço',
-        'title_singular' => 'Grupo de serviço',
+        'title_singular' => 'Grupos de serviço',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -231,8 +231,6 @@ return [
             'deleted_at_helper' => ' ',
             'pioneer'           => 'Pioneiro',
             'pioneer_helper'    => ' ',
-            'tik_pioneer'           => 'Pioneiro com tique',
-            'tik_pioneer_helper'    => ' ',
         ],
     ],
     'year' => [
@@ -253,7 +251,7 @@ return [
     ],
     'month' => [
         'title'          => 'Meses',
-        'title_singular' => 'Mês',
+        'title_singular' => 'Mese',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -305,7 +303,7 @@ return [
     ],
     'meeting' => [
         'title'          => 'Reuniões',
-        'title_singular' => 'Reunião',
+        'title_singular' => 'Reuniõe',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -323,6 +321,8 @@ return [
             'meeting_helper'    => ' ',
             'presences'         => 'Assistência',
             'presences_helper'  => ' ',
+            'receipt'           => 'Recibo',
+            'receipt_helper'    => ' ',
         ],
     ],
     'organizing' => [
@@ -335,11 +335,7 @@ return [
     ],
     'assistanceToMeeting' => [
         'title'          => 'Assistência às reuniões',
-        'title_singular' => 'Assistência às reuniões',
-    ],
-    'shepherding' => [
-        'title'          => 'Pastoreio',
-        'title_singular' => 'Pastoreio',
+        'title_singular' => 'Assistência às reuniõe',
     ],
     'shepherdingReason' => [
         'title'          => 'Motivos',
@@ -383,11 +379,13 @@ return [
             'deleted_at_helper'         => ' ',
             'observations'              => 'Observações',
             'observations_helper'       => ' ',
+            'created_by'                => 'Created By',
+            'created_by_helper'         => ' ',
         ],
     ],
     'eldersMeeting' => [
         'title'          => 'Reuniões de anciãos',
-        'title_singular' => 'Reunião de anciãos',
+        'title_singular' => 'Reuniões de ancião',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => ' ',
@@ -409,9 +407,13 @@ return [
         'title'          => 'Relatórios por grupo',
         'title_singular' => 'Relatórios por grupo',
     ],
+    'shepherding' => [
+        'title'          => 'Pastoreio',
+        'title_singular' => 'Pastoreio',
+    ],
     'importantDate' => [
         'title'          => 'Datas importantes',
-        'title_singular' => 'Data importante',
+        'title_singular' => 'Datas importante',
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => ' ',
@@ -427,11 +429,13 @@ return [
             'updated_at_helper'  => ' ',
             'deleted_at'         => 'Deleted at',
             'deleted_at_helper'  => ' ',
+            'created_by'         => 'Created By',
+            'created_by_helper'  => ' ',
         ],
     ],
     'groupPublisher' => [
         'title'          => 'Publicadores do grupo',
-        'title_singular' => 'Publicador do grupo',
+        'title_singular' => 'Publicadores do grupo',
     ],
     'receipt' => [
         'title'          => 'Recibos',
@@ -459,7 +463,6 @@ return [
             'updated_at_helper'                  => ' ',
             'deleted_at'                         => 'Deleted at',
             'deleted_at_helper'                  => ' ',
-            'total'                              => 'Total',
         ],
     ],
     'auditLog' => [
@@ -484,6 +487,100 @@ return [
             'created_at_helper'   => ' ',
             'updated_at'          => 'Updated at',
             'updated_at_helper'   => ' ',
+        ],
+    ],
+    'clmMeeting' => [
+        'title'          => 'Reuniões',
+        'title_singular' => 'Reuniõe',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'date'              => 'Data',
+            'date_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'christianLifeAndMinistry' => [
+        'title'          => 'Vida e Ministério Cristãos',
+        'title_singular' => 'Vida e Ministério Cristão',
+    ],
+    'student' => [
+        'title'          => 'Estudante',
+        'title_singular' => 'Estudante',
+        'fields'         => [
+            'id'                 => 'ID',
+            'id_helper'          => ' ',
+            'name'               => 'Nome',
+            'name_helper'        => ' ',
+            'created_at'         => 'Created at',
+            'created_at_helper'  => ' ',
+            'updated_at'         => 'Updated at',
+            'updated_at_helper'  => ' ',
+            'deleted_at'         => 'Deleted at',
+            'deleted_at_helper'  => ' ',
+            'assignments'        => 'Designações',
+            'assignments_helper' => ' ',
+        ],
+    ],
+    'assignment' => [
+        'title'          => 'Designações',
+        'title_singular' => 'Designaçõe',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'name'              => 'Nome',
+            'name_helper'       => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'lifeMinistry' => [
+        'title'          => 'Reuniões',
+        'title_singular' => 'Reuniõe',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => ' ',
+            'date'              => 'Data',
+            'date_helper'       => ' ',
+            'disabled'          => 'Não se vai realizar',
+            'disabled_helper'   => ' ',
+            'reason'            => 'Razão para não se realizar',
+            'reason_helper'     => ' ',
+            'created_at'        => 'Created at',
+            'created_at_helper' => ' ',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => ' ',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => ' ',
+        ],
+    ],
+    'lifeMinistryEvent' => [
+        'title'          => 'Designações por reunião',
+        'title_singular' => 'Designações por reunião',
+        'fields'         => [
+            'id'                   => 'ID',
+            'id_helper'            => ' ',
+            'life_ministry'        => 'Reunião',
+            'life_ministry_helper' => ' ',
+            'assignment'           => 'Designação',
+            'assignment_helper'    => ' ',
+            'created_at'           => 'Created at',
+            'created_at_helper'    => ' ',
+            'updated_at'           => 'Updated at',
+            'updated_at_helper'    => ' ',
+            'deleted_at'           => 'Deleted at',
+            'deleted_at_helper'    => ' ',
+            'student'              => 'Estudante',
+            'student_helper'       => ' ',
         ],
     ],
 ];
