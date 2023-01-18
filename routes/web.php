@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Hash;
 
-Route::get('link', function () {
-    Artisan::call('storage:link');
-});
-
 Route::redirect('/', '/login');
 Route::get('/home', function () {
     if (session('status')) {
