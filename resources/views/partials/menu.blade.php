@@ -320,7 +320,7 @@
             </a>
         </li>
         @can('christian_life_and_ministry_access')
-            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/clm-meetings*") ? "c-show" : "" }} {{ request()->is("admin/students*") ? "c-show" : "" }} {{ request()->is("admin/assignments*") ? "c-show" : "" }} {{ request()->is("admin/life-ministries*") ? "c-show" : "" }} {{ request()->is("admin/life-ministry-events*") ? "c-show" : "" }}">
+            <li class="c-sidebar-nav-dropdown {{ request()->is("admin/*") ? "c-show" : "" }} {{ request()->is("admin/monthly-schedules*") ? "c-show" : "" }}">
                 <a class="c-sidebar-nav-dropdown-toggle" href="#">
                     <i class="fa-fw fas fa-graduation-cap c-sidebar-nav-icon">
 
@@ -328,53 +328,75 @@
                     {{ trans('cruds.christianLifeAndMinistry.title') }}
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items">
-                    @can('clm_meeting_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.clm-meetings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/clm-meetings") || request()->is("admin/clm-meetings/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-user-tie c-sidebar-nav-icon">
+                    @can('lm_setting_access')
+                        <li class="c-sidebar-nav-dropdown {{ request()->is("admin/clm-meetings*") ? "c-show" : "" }} {{ request()->is("admin/students*") ? "c-show" : "" }} {{ request()->is("admin/assignments*") ? "c-show" : "" }} {{ request()->is("admin/life-ministries*") ? "c-show" : "" }} {{ request()->is("admin/life-ministry-events*") ? "c-show" : "" }}">
+                            <a class="c-sidebar-nav-dropdown-toggle" href="#">
+                                <i class="fa-fw fas fa-cogs c-sidebar-nav-icon">
 
                                 </i>
-                                {{ trans('cruds.clmMeeting.title') }}
+                                {{ trans('cruds.lmSetting.title') }}
                             </a>
-                        </li>
-                    @endcan
-                    @can('student_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.students.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/students") || request()->is("admin/students/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-graduation-cap c-sidebar-nav-icon">
+                            <ul class="c-sidebar-nav-dropdown-items">
+                                @can('clm_meeting_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route("admin.clm-meetings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/clm-meetings") || request()->is("admin/clm-meetings/*") ? "c-active" : "" }}">
+                                            <i class="fa-fw fas fa-user-tie c-sidebar-nav-icon">
 
-                                </i>
-                                {{ trans('cruds.student.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('assignment_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.assignments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assignments") || request()->is("admin/assignments/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-ticket-alt c-sidebar-nav-icon">
+                                            </i>
+                                            {{ trans('cruds.clmMeeting.title') }}
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('student_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route("admin.students.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/students") || request()->is("admin/students/*") ? "c-active" : "" }}">
+                                            <i class="fa-fw fas fa-graduation-cap c-sidebar-nav-icon">
 
-                                </i>
-                                {{ trans('cruds.assignment.title') }}
-                            </a>
+                                            </i>
+                                            {{ trans('cruds.student.title') }}
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('assignment_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route("admin.assignments.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/assignments") || request()->is("admin/assignments/*") ? "c-active" : "" }}">
+                                            <i class="fa-fw fas fa-ticket-alt c-sidebar-nav-icon">
+
+                                            </i>
+                                            {{ trans('cruds.assignment.title') }}
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('life_ministry_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route("admin.life-ministries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/life-ministries") || request()->is("admin/life-ministries/*") ? "c-active" : "" }}">
+                                            <i class="fa-fw fas fa-calendar-alt c-sidebar-nav-icon">
+
+                                            </i>
+                                            {{ trans('cruds.lifeMinistry.title') }}
+                                        </a>
+                                    </li>
+                                @endcan
+                                @can('life_ministry_event_access')
+                                    <li class="c-sidebar-nav-item">
+                                        <a href="{{ route("admin.life-ministry-events.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/life-ministry-events") || request()->is("admin/life-ministry-events/*") ? "c-active" : "" }}">
+                                            <i class="fa-fw fas fa-circle c-sidebar-nav-icon">
+
+                                            </i>
+                                            {{ trans('cruds.lifeMinistryEvent.title') }}
+                                        </a>
+                                    </li>
+                                @endcan
+                            </ul>
                         </li>
                     @endcan
-                    @can('life_ministry_access')
+                    @can('monthly_schedule_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.life-ministries.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/life-ministries") || request()->is("admin/life-ministries/*") ? "c-active" : "" }}">
+                            <a href="{{ route("admin.monthly-schedules.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/monthly-schedules") || request()->is("admin/monthly-schedules/*") ? "c-active" : "" }}">
                                 <i class="fa-fw fas fa-calendar-alt c-sidebar-nav-icon">
 
                                 </i>
-                                {{ trans('cruds.lifeMinistry.title') }}
-                            </a>
-                        </li>
-                    @endcan
-                    @can('life_ministry_event_access')
-                        <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.life-ministry-events.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/life-ministry-events") || request()->is("admin/life-ministry-events/*") ? "c-active" : "" }}">
-                                <i class="fa-fw fas fa-circle c-sidebar-nav-icon">
-
-                                </i>
-                                {{ trans('cruds.lifeMinistryEvent.title') }}
+                                {{ trans('cruds.monthlySchedule.title') }}
                             </a>
                         </li>
                     @endcan

@@ -583,4 +583,12 @@ return [
             'student_helper'       => ' ',
         ],
     ],
+    'lmSetting' => [
+        'title'          => 'Configurações',
+        'title_singular' => 'Configuraçõe',
+    ],
+    'monthlySchedule' => [
+        'title'          => 'Programação Mensal',
+        'title_singular' => 'Programação Mensal',
+    ],
 ];

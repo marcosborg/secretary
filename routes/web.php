@@ -28,23 +28,37 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('dashboard/{month_id}', 'HomeController@dashboard');
     Route::post('dashboard/change_month', 'HomeController@changeMonth');
 
-    Route::prefix('maintenance')->group(function () {
-        Route::get('/', function () {
-            return [];
+    Route::prefix('maintenance')->group(
+        function () {
+            Route::get(
+                '/',
+                function () {
+                        return [];
+                    }
+            );
+            Route::get(
+                'up',
+                function () {
+                        Artisan::call('up');
+                        return redirect('/');
+                    }
+            );
+            Route::get(
+                'down',
+                function () {
+                        $hash = Hash::make(rand());
+                        Artisan::call('down --secret="' . $hash . '"');
+                        return redirect('/' . $hash);
+                    }
+            );
         }
-        );
-        Route::get('up', function () {
-            Artisan::call('up');
-            return redirect('/');
+    );
+
+    // Forms
+    Route::prefix('forms')->group(
+        function () {
+            Route::post('addMeeting', 'MonthlyScheduleController@addMeeting');
         }
-        );
-        Route::get('down', function () {
-            $hash = Hash::make(rand());
-            Artisan::call('down --secret="' . $hash . '"');
-            return redirect('/' . $hash);
-        }
-        );
-    }
     );
 
     // Permissions
@@ -185,5 +199,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Life Ministry Event
     Route::delete('life-ministry-events/destroy', 'LifeMinistryEventController@massDestroy')->name('life-ministry-events.massDestroy');
     Route::resource('life-ministry-events', 'LifeMinistryEventController');
+
+    // Monthly Schedule
+    Route::delete('monthly-schedules/destroy', 'MonthlyScheduleController@massDestroy')->name('monthly-schedules.massDestroy');
+    Route::resource('monthly-schedules', 'MonthlyScheduleController');
 
 });
