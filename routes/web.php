@@ -180,10 +180,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Audit Logs
     Route::resource('audit-logs', 'AuditLogsController', ['except' => ['create', 'store', 'edit', 'update', 'destroy']]);
 
-    // Clm Meeting
-    Route::delete('clm-meetings/destroy', 'ClmMeetingController@massDestroy')->name('clm-meetings.massDestroy');
-    Route::resource('clm-meetings', 'ClmMeetingController');
-
     // Student
     Route::delete('students/destroy', 'StudentController@massDestroy')->name('students.massDestroy');
     Route::resource('students', 'StudentController');

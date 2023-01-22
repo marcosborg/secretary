@@ -337,16 +337,6 @@
                                 {{ trans('cruds.lmSetting.title') }}
                             </a>
                             <ul class="c-sidebar-nav-dropdown-items">
-                                @can('clm_meeting_access')
-                                    <li class="c-sidebar-nav-item">
-                                        <a href="{{ route("admin.clm-meetings.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/clm-meetings") || request()->is("admin/clm-meetings/*") ? "c-active" : "" }}">
-                                            <i class="fa-fw fas fa-user-tie c-sidebar-nav-icon">
-
-                                            </i>
-                                            {{ trans('cruds.clmMeeting.title') }}
-                                        </a>
-                                    </li>
-                                @endcan
                                 @can('student_access')
                                     <li class="c-sidebar-nav-item">
                                         <a href="{{ route("admin.students.index") }}" class="c-sidebar-nav-link {{ request()->is("admin/students") || request()->is("admin/students/*") ? "c-active" : "" }}">
