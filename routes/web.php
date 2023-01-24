@@ -197,7 +197,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('life-ministry-events', 'LifeMinistryEventController');
 
     // Monthly Schedule
-    Route::delete('monthly-schedules/destroy', 'MonthlyScheduleController@massDestroy')->name('monthly-schedules.massDestroy');
     Route::resource('monthly-schedules', 'MonthlyScheduleController');
-
+    Route::get('ajax', 'MonthlyScheduleController@ajax');
+    Route::get('deleteMeeting/{meeting_id}', 'MonthlyScheduleController@deleteMeeting');
+    Route::get('getMeeting/{meeting_id}', 'MonthlyScheduleController@getMeeting');
+    Route::post('updateMeeting', 'MonthlyScheduleController@updateMeeting');
 });

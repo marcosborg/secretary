@@ -15,6 +15,11 @@ class MonthlyScheduleController extends Controller
     {
         abort_if(Gate::denies('monthly_schedule_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        return view('admin.monthlySchedules.index');
+    }
+
+    public function ajax()
+    {
         $query = LifeMinistry::orderBy('date')->get();
 
         $lifeMinistries = collect();
@@ -74,8 +79,7 @@ class MonthlyScheduleController extends Controller
             $year = $year->groupBy('month');
             $lifeMinistries[$key] = $year;
         }
-
-        return view('admin.monthlySchedules.index')->with('lifeMinistries', $lifeMinistries);
+        return view('admin.monthlySchedules.ajax')->with('lifeMinistries', $lifeMinistries);
     }
 
     public function addMeeting(Request $request)
@@ -86,15 +90,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                'date' => 'Data da reunião',
-                'reason' => 'Motivo'
-            ]);
+                    'date' => 'Data da reunião',
+                    'reason' => 'Motivo'
+                ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                'date' => 'Data da reunião'
-            ]);
+                    'date' => 'Data da reunião'
+                ]);
         }
 
         $lifeMinistry = new LifeMinistry;
@@ -103,6 +107,49 @@ class MonthlyScheduleController extends Controller
             $lifeMinistry->disabled = true;
         }
         $lifeMinistry->reason = $request->reason;
+        $lifeMinistry->save();
+
+        return $lifeMinistry;
+    }
+
+    public function deleteMeeting(Request $request)
+    {
+        return LifeMinistry::find($request->meeting_id)->delete();
+    }
+
+    public function getMeeting(Request $request)
+    {
+        return LifeMinistry::find($request->meeting_id);
+    }
+
+    public function updateMeeting(Request $request)
+    {
+        if ($request->disabled) {
+            $request->validate([
+                'date' => 'required|date',
+                'reason' => 'required'
+            ], [], [
+                    'date' => 'Data da reunião',
+                    'reason' => 'Motivo'
+                ]);
+        } else {
+            $request->validate([
+                'date' => 'required|date',
+            ], [], [
+                    'date' => 'Data da reunião'
+                ]);
+        }
+
+        $lifeMinistry = LifeMinistry::find($request->id);
+        $lifeMinistry->date = $request->date;
+        if ($request->disabled) {
+            $lifeMinistry->disabled = true;
+            $lifeMinistry->reason = $request->reason;
+        } else {
+            $lifeMinistry->disabled = false;
+            $lifeMinistry->reason = '';
+        }
+        
         $lifeMinistry->save();
 
         return $lifeMinistry;
