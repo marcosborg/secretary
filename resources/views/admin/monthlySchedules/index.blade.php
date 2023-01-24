@@ -85,6 +85,29 @@
     </div>
 </div>
 
+<div class="modal fade" id="addEvent" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Adicionar designação</h3>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
+            </div>
+            <form action="/admin/addEvent" method="POST" id="addEvent">
+                <input type="hidden" name="meeting_id">
+                @csrf
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Gravar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @section('styles')
 <style>
     .nav-tabs .nav-item.show .nav-link,
@@ -116,18 +139,13 @@
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
 </script>
 <script>
-    $(function() {
-        ajax();
-    });
-    ajax = () => {
-        $.get('/admin/ajax').then((resp) => {
-            $('#ajax').html(resp);
-        });
+    addEvent = (meeting_id) => {
+        $('#addEvent').modal('show');
     }
 </script>
-
 <script>
     $(function() {
+        ajax();
         $('#createMeeting #disabled').on('change', () => {
             if ($('#createMeeting #disabled').is(':checked')) {
                 $('#createMeeting #reason').removeClass('d-none');
@@ -200,6 +218,11 @@
             }
         });
     });
+    ajax = () => {
+        $.get('/admin/ajax').then((resp) => {
+            $('#ajax').html(resp);
+        });
+    }
     deleteMeeting = (meeting_id) => {
         Swal.fire({
             title: 'Tem a certeza?',
