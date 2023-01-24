@@ -15,7 +15,7 @@ class MonthlyScheduleController extends Controller
     {
         abort_if(Gate::denies('monthly_schedule_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $query = LifeMinistry::get();
+        $query = LifeMinistry::orderBy('date')->get();
 
         $lifeMinistries = collect();
         $years = collect();

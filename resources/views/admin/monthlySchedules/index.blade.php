@@ -53,15 +53,15 @@
                     @endphp
                     <div class="tab-pane fade show {{ $monthCount == 1 ? 'active' : '' }}" id="tab-pane-{{ $monthName }}" role="tabpanel" aria-labelledby="tab-{{ $monthName }}" tabindex="{{ $monthCount }}">
                         <div class="row">
-                            
+                            @foreach($month as $meeting)
                             <div class="col">
                                 <div class="card bg-warning text-white">
                                     <div class="card-body">
-                                        Reunião
+                                        Dia {{ \Carbon\Carbon::parse($meeting->date)->day }}
                                     </div>
                                 </div>
                             </div>
-                            
+                            @endforeach
                         </div>
                     </div>
                     @endforeach
