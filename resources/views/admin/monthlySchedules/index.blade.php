@@ -19,8 +19,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/forms/addMeeting" method="POST" id="createMeeting">
                 @csrf
@@ -54,8 +53,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Atualizar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/updateMeeting" method="POST" id="updateMeeting">
                 <input type="hidden" name="id">
@@ -85,19 +83,25 @@
     </div>
 </div>
 
-<div class="modal fade" id="addEvent" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="addEventModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar designação</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/addEvent" method="POST" id="addEvent">
                 <input type="hidden" name="meeting_id">
                 @csrf
                 <div class="modal-body">
-
+                    <div class="form-group">
+                        <label>Designação</label>
+                        <select name="assignment" class="form-control select2"></select>
+                    </div>
+                    <div class="form-group d-none" id="publisher">
+                        <label>Irmão/ irmã designado(a)</label>
+                        <select name="publisher" class="form-control select2"></select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -144,7 +148,19 @@
 </script>
 <script>
     addEvent = (meeting_id) => {
-        $('#addEvent').modal('show');
+        $('#addEvent input[name="meeting_id"]').val(meeting_id);
+        $.LoadingOverlay('show');
+        $('#publisher').addClass('d-none');
+        $('#publisher select[name="publisher"]').html('')
+        $.get('/admin/getAssignments').then((assignments) => {
+            $('#addEventModal').modal('show');
+            let html = '<option selected disabled>Escolher</option>';
+            assignments.forEach(assignment => {
+                html += '<option value="' + assignment.id + '">' + assignment.name + '</option>';
+            });
+            $('#addEvent select[name="assignment"]').html(html);
+            $.LoadingOverlay('hide');
+        });
     }
 </script>
 <script>
@@ -197,7 +213,6 @@
                 $.LoadingOverlay('show');
             },
             success: (resp) => {
-                console.log(resp);
                 $.LoadingOverlay('hide');
                 $('#editMeeting input[name="date"]').val('');
                 $('#editMeeting input[name="disabled"]').prop('checked', false);
@@ -220,6 +235,15 @@
                     'error'
                 );
             }
+        });
+        $('#addEvent select[name="assignment"]').change(() => {
+            $.LoadingOverlay('show');
+            let meeting_id = $('#addEvent input[name="meeting_id"]').val();
+            let assignment = $('#addEvent select[name="assignment"]').val();
+            $.get('/admin/getPublishers/' + meeting_id + '/' + assignment).then((resp) => {
+                $.LoadingOverlay('hide');
+                console.log(resp);
+            });
         });
     });
     ajax = () => {
@@ -256,7 +280,7 @@
             $.LoadingOverlay('hide');
             $('#editMeeting input[name="id"]').val(resp.id);
             $('#editMeeting input[name="date"]').val(resp.date);
-            if(resp.disabled == 1){
+            if (resp.disabled == 1) {
                 $('#editMeeting input[name="disabled"]').attr('checked', true);
                 $('#editMeeting #reason').removeClass('d-none');
             } else {

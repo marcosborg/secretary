@@ -97,6 +97,3 @@ $yearCount = 0;
     </div>
     @endforeach
 </div>
-<script>
-    console.log({!! $lifeMinistries !!});
-</script>

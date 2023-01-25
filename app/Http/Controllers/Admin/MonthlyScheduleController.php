@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Assignment;
 use App\Models\LifeMinistry;
+use App\Models\LifeMinistryEvent;
+use App\Models\Student;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -82,7 +85,9 @@ class MonthlyScheduleController extends Controller
             $year = $year->groupBy('month');
             $lifeMinistries[$key] = $year;
         }
-        return view('admin.monthlySchedules.ajax')->with('lifeMinistries', $lifeMinistries);
+        return view('admin.monthlySchedules.ajax')->with([
+            'lifeMinistries' => $lifeMinistries,
+        ]);
     }
 
     public function addMeeting(Request $request)
@@ -93,15 +98,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                    'date' => 'Data da reunião',
-                    'reason' => 'Motivo'
-                ]);
+                'date' => 'Data da reunião',
+                'reason' => 'Motivo'
+            ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                    'date' => 'Data da reunião'
-                ]);
+                'date' => 'Data da reunião'
+            ]);
         }
 
         $lifeMinistry = new LifeMinistry;
@@ -132,15 +137,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                    'date' => 'Data da reunião',
-                    'reason' => 'Motivo'
-                ]);
+                'date' => 'Data da reunião',
+                'reason' => 'Motivo'
+            ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                    'date' => 'Data da reunião'
-                ]);
+                'date' => 'Data da reunião'
+            ]);
         }
 
         $lifeMinistry = LifeMinistry::find($request->id);
@@ -156,5 +161,38 @@ class MonthlyScheduleController extends Controller
         $lifeMinistry->save();
 
         return $lifeMinistry;
+    }
+
+    public function getAssignments()
+    {
+        return Assignment::all();
+    }
+
+    public function getPublishers(Request $request)
+    {
+        $studants = Student::with('assignments')
+            ->whereHas('assignments', function ($query) use ($request) {
+                $query->where('id', $request->assignment);
+            })
+            ->get();
+
+        $studantsOrdered = collect();
+
+        foreach ($studants as $studant) {
+            $lifeMinistryEvent = LifeMinistryEvent::where([
+                'assignment_id' => $request->assignment,
+                'student_id' => $studant->id
+            ])
+                ->with('life_ministry', function($q) {
+                    $q->orderBy('date', 'DESC');
+                })
+                ->first();
+            $studantsOrdered->add([
+                'studant' => $studant,
+                'date' => $lifeMinistryEvent->lifeMinistery->date
+            ]);
+        }
+
+        return $studantsOrdered;
     }
 }

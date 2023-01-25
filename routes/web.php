@@ -202,4 +202,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('deleteMeeting/{meeting_id}', 'MonthlyScheduleController@deleteMeeting');
     Route::get('getMeeting/{meeting_id}', 'MonthlyScheduleController@getMeeting');
     Route::post('updateMeeting', 'MonthlyScheduleController@updateMeeting');
+    Route::get('getAssignments', 'MonthlyScheduleController@getAssignments');
+    Route::get('getPublishers/{meeting_id}/{assignment}', 'MonthlyScheduleController@getPublishers');
 });
