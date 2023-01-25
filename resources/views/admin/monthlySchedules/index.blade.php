@@ -97,7 +97,7 @@
                 <input type="hidden" name="meeting_id">
                 @csrf
                 <div class="modal-body">
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -129,6 +129,10 @@
 
     #ajax .card-title {
         margin-bottom: 0;
+    }
+
+    .list-group-item-action {
+        cursor: pointer;
     }
 </style>
 @endsection

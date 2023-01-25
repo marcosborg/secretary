@@ -20,7 +20,10 @@ class MonthlyScheduleController extends Controller
 
     public function ajax()
     {
-        $query = LifeMinistry::orderBy('date')->get();
+        $query = LifeMinistry::orderBy('date')
+            ->with('lifeMinistryEvents.student')
+            ->with('lifeMinistryEvents.assignment')
+            ->get();
 
         $lifeMinistries = collect();
         $years = collect();
@@ -147,9 +150,9 @@ class MonthlyScheduleController extends Controller
             $lifeMinistry->reason = $request->reason;
         } else {
             $lifeMinistry->disabled = false;
-            $lifeMinistry->reason = '';
+            $lifeMinistry->reason = null;
         }
-        
+
         $lifeMinistry->save();
 
         return $lifeMinistry;
