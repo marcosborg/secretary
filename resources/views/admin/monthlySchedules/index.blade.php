@@ -193,6 +193,9 @@
         $('#addEventModal .select2').select2({
             dropdownParent: $('#addEventModal')
         });
+        $('#updateEventModal .select2').select2({
+            dropdownParent: $('#updateEventModal')
+        });
         $('#createMeeting #disabled').on('change', () => {
             if ($('#createMeeting #disabled').is(':checked')) {
                 $('#createMeeting #reason').removeClass('d-none');
