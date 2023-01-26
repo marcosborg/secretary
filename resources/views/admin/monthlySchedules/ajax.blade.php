@@ -69,10 +69,12 @@ $yearCount = 0;
                                 </div>
                             </div>
                             @if ($meeting->lifeMinistryEvents->count() > 0)
-                            <ul class="list-group list-group-flush">
+                            <ul class="list-group list-group-flush sortable">
                                 @foreach ($meeting->lifeMinistryEvents as $assignment)
-                                <li
-                                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
+                                    style="background: {{ $assignment->assignment->color }};"
+                                    onclick="updateEvent({{ $assignment->id }})" data-meeting="{{ $meeting->id }}"
+                                    data-event="{{ $assignment->id }}">
                                     <div class="ms-2 me-auto">
                                         <strong>{{ $assignment->assignment->name }}</strong><br>
                                         {{ $assignment->student->name }}

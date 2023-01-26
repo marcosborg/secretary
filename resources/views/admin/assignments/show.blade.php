@@ -31,6 +31,14 @@
                             {{ $assignment->name }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.assignment.fields.color') }}
+                        </th>
+                        <td>
+                            {{ $assignment->color }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -489,22 +489,6 @@ return [
             'updated_at_helper'   => ' ',
         ],
     ],
-    'clmMeeting' => [
-        'title'          => 'Reuniões',
-        'title_singular' => 'Reuniõe',
-        'fields'         => [
-            'id'                => 'ID',
-            'id_helper'         => ' ',
-            'date'              => 'Data',
-            'date_helper'       => ' ',
-            'created_at'        => 'Created at',
-            'created_at_helper' => ' ',
-            'updated_at'        => 'Updated at',
-            'updated_at_helper' => ' ',
-            'deleted_at'        => 'Deleted at',
-            'deleted_at_helper' => ' ',
-        ],
-    ],
     'christianLifeAndMinistry' => [
         'title'          => 'Vida e Ministério Cristãos',
         'title_singular' => 'Vida e Ministério Cristão',
@@ -541,6 +525,8 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
+            'color'             => 'Cor',
+            'color_helper'      => ' ',
         ],
     ],
     'lifeMinistry' => [

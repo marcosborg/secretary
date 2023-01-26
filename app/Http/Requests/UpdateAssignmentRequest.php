@@ -21,6 +21,10 @@ class UpdateAssignmentRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'color' => [
+                'string',
+                'required',
+            ],
         ];
     }
 }

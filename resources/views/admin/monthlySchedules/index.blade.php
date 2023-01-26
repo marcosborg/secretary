@@ -115,6 +115,35 @@
     </div>
 </div>
 
+<div class="modal fade" id="updateEventModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Alterar designação</h3>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
+            </div>
+            <form action="/admin/updateEvent" method="POST" id="updateEvent">
+                <input type="hidden" name="event_id">
+                @csrf
+                <div class="modal-body">
+                    <h5 id="assignment"></h5>
+                    <h4 id="student"></h4>
+                    <div class="form-group">
+                        <label>Irmão/ irmã a designar</label>
+                        <select name="publisher" class="form-control select2"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Gravar</button>
+                    <button type="button" class="btn btn-danger">Apagar designação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 @section('styles')
 <style>
     .nav-tabs .nav-item.show .nav-link,
@@ -141,6 +170,15 @@
     .list-group-item-action {
         cursor: pointer;
     }
+
+    .list-group-item {
+        color: #555;
+    }
+
+    .list-group-item-action:focus,
+    .list-group-item-action:hover {
+        opacity: 0.9;
+    }
 </style>
 @endsection
 
@@ -150,25 +188,11 @@
 <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js">
 </script>
 <script>
-    addEvent = (meeting_id) => {
-        $('#addEvent input[name="meeting_id"]').val(meeting_id);
-        $.LoadingOverlay('show');
-        $('#publisher').addClass('d-none');
-        $('#publisher select[name="publisher"]').html('')
-        $.get('/admin/getAssignments').then((assignments) => {
-            $('#addEventModal').modal('show');
-            let html = '<option selected disabled value="">Escolher</option>';
-            assignments.forEach(assignment => {
-                html += '<option value="' + assignment.id + '">' + assignment.name + '</option>';
-            });
-            $('#addEvent select[name="assignment"]').html(html);
-            $.LoadingOverlay('hide');
-        });
-    }
-</script>
-<script>
     $(function() {
         ajax();
+        $('#addEventModal .select2').select2({
+            dropdownParent: $('#addEventModal')
+        });
         $('#createMeeting #disabled').on('change', () => {
             if ($('#createMeeting #disabled').is(':checked')) {
                 $('#createMeeting #reason').removeClass('d-none');
@@ -243,7 +267,7 @@
             $.LoadingOverlay('show');
             let meeting_id = $('#addEvent input[name="meeting_id"]').val();
             let assignment = $('#addEvent select[name="assignment"]').val();
-            $.get('/admin/getPublishers/' + meeting_id + '/' + assignment).then((students) => {
+            $.get('/admin/getPublishers/' + assignment).then((students) => {
                 let html = '<option selected disabled value="">Escolher</option>';
                 students.forEach(student => {
                     html += '<option value="' + student.student_id + '">' + student.student + '</option>';
@@ -279,10 +303,45 @@
                 );
             }
         });
+        $('#updateEvent').ajaxForm({
+            beforeSubmit: () => {
+                $.LoadingOverlay('show');
+            },
+            success: (resp) => {
+                $.LoadingOverlay('hide');
+                $('#updateEventModal').modal('hide');
+                Swal.fire(
+                    'Bom trabalho!',
+                    'A designação foi atualizada com sucesso!',
+                    'success'
+                ).then(() => {
+                    ajax();
+                });
+            },
+            error: (err) => {
+                $.LoadingOverlay('hide');
+                let error = err.responseJSON.message;
+                Swal.fire(
+                    'Erro de validação!',
+                    error,
+                    'error'
+                );
+            }
+        });
     });
     ajax = () => {
+        $.LoadingOverlay('show');
         $.get('/admin/ajax').then((resp) => {
+            $.LoadingOverlay('hide');
             $('#ajax').html(resp);
+            $('.sortable').sortable({
+                stop: (event, ui) => {
+                    console.log({
+                        event: event,
+                        ui: ui,
+                    });
+                }
+            });
         });
     }
     deleteMeeting = (meeting_id) => {
@@ -324,6 +383,38 @@
             $('#editMeeting input[name="reason"]').val(resp.reason);
         });
         $('#editMeeting').modal('show');
+    }
+    addEvent = (meeting_id) => {
+        $('#addEvent input[name="meeting_id"]').val(meeting_id);
+        $.LoadingOverlay('show');
+        $('#publisher').addClass('d-none');
+        $('#publisher select[name="publisher"]').html('')
+        $.get('/admin/getAssignments').then((assignments) => {
+            $('#addEventModal').modal('show');
+            let html = '<option selected disabled value="">Escolher</option>';
+            assignments.forEach(assignment => {
+                html += '<option value="' + assignment.id + '">' + assignment.name + '</option>';
+            });
+            $('#addEvent select[name="assignment"]').html(html);
+            $.LoadingOverlay('hide');
+        });
+    }
+    updateEvent = (event_id) => {
+        $.LoadingOverlay('show');
+        $('#updateEvent input[name="event_id"]').val(event_id);
+        $.get('/admin/getEvent/' + event_id).then((event) => {
+            $.get('/admin/getPublishers/' + event.assignment_id).then((publishers) => {
+                let html = '<option selected disabled value="">Escolher</option>';
+                publishers.forEach(publisher => {
+                    html += '<option value="' + publisher.student_id + '">' + publisher.student + '</option>';
+                });
+                $('#updateEvent select[name="publisher"]').html(html);
+                $('#assignment').text(event.assignment.name);
+                $('#student').text(event.student.name);
+                $.LoadingOverlay('hide');
+                $('#updateEventModal').modal('show');
+            });
+        });
     }
 </script>
 @endsection

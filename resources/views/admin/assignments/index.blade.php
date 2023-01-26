@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 @section('content')
 @can('assignment_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.assignments.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.assignment.title_singular') }}
-            </a>
-        </div>
+<div style="margin-bottom: 10px;" class="row">
+    <div class="col-lg-12">
+        <a class="btn btn-success" href="{{ route('admin.assignments.create') }}">
+            {{ trans('global.add') }} {{ trans('cruds.assignment.title_singular') }}
+        </a>
     </div>
+</div>
 @endcan
 <div class="card">
     <div class="card-header">
@@ -29,46 +29,56 @@
                             {{ trans('cruds.assignment.fields.name') }}
                         </th>
                         <th>
+                            {{ trans('cruds.assignment.fields.color') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($assignments as $key => $assignment)
-                        <tr data-entry-id="{{ $assignment->id }}">
-                            <td>
+                    <tr data-entry-id="{{ $assignment->id }}">
+                        <td>
 
-                            </td>
-                            <td>
-                                {{ $assignment->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $assignment->name ?? '' }}
-                            </td>
-                            <td>
-                                @can('assignment_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.assignments.show', $assignment->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                        </td>
+                        <td>
+                            {{ $assignment->id ?? '' }}
+                        </td>
+                        <td>
+                            {{ $assignment->name ?? '' }}
+                        </td>
+                        <td>
+                            <div class="color-item" style="background: {{ $assignment->color ?? '' }};"></div>
+                        </td>
+                        <td>
+                            @can('assignment_show')
+                            <a class="btn btn-xs btn-primary"
+                                href="{{ route('admin.assignments.show', $assignment->id) }}">
+                                {{ trans('global.view') }}
+                            </a>
+                            @endcan
 
-                                @can('assignment_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.assignments.edit', $assignment->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                            @can('assignment_edit')
+                            <a class="btn btn-xs btn-info"
+                                href="{{ route('admin.assignments.edit', $assignment->id) }}">
+                                {{ trans('global.edit') }}
+                            </a>
+                            @endcan
 
-                                @can('assignment_delete')
-                                    <form action="{{ route('admin.assignments.destroy', $assignment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
+                            @can('assignment_delete')
+                            <form action="{{ route('admin.assignments.destroy', $assignment->id) }}" method="POST"
+                                onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                style="display: inline-block;">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                            </form>
+                            @endcan
 
-                            </td>
+                        </td>
 
-                        </tr>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
@@ -76,9 +86,19 @@
     </div>
 </div>
 
-
-
 @endsection
+
+@section('styles')
+<style>
+    .color-item {
+        width: 25px;
+        height: 25px;
+        border: solid 1px #ccc;
+        border-radius: 5px;
+    }
+</style>
+@endsection
+
 @section('scripts')
 @parent
 <script>

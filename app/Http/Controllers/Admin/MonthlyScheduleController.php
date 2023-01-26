@@ -222,4 +222,30 @@ class MonthlyScheduleController extends Controller
         $lifeMinistryEvent->student_id = $request->publisher;
         $lifeMinistryEvent->save();
     }
+
+    public function getEvent(Request $request)
+    {
+        return LifeMinistryEvent::where('id', $request->event_id)
+            ->with([
+                'life_ministry',
+                'assignment',
+                'student'
+            ])
+            ->first();
+
+    }
+
+    public function updateEvent(Request $request)
+    {
+        $request->validate([
+            'publisher' => 'required',
+        ], [], [
+                'publisher' => 'Irmão/ irmã a designar',
+            ]);
+        $lifeMinistryEvent = LifeMinistryEvent::find($request->event_id);
+        $lifeMinistryEvent->student_id = $request->publisher;
+        $lifeMinistryEvent->save();
+
+    }
+
 }

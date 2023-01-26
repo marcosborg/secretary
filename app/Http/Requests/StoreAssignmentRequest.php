@@ -21,6 +21,10 @@ class StoreAssignmentRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'color' => [
+                'string',
+                'required',
+            ],
         ];
     }
 }
