@@ -65,7 +65,7 @@ $yearCount = 0;
                             <div class="card-body">
                                 <div class="text-center">
                                     <button class="btn btn-default btn-sm"
-                                        onclick="addEvent({{ $meeting->id }})">Adicionar designação</button>
+                                        onclick="addEvent({{ $meeting->id }})">Adicionar</button>
                                 </div>
                             </div>
                             @if ($meeting->lifeMinistryEvents->count() > 0)
