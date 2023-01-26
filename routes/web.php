@@ -204,4 +204,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('updateMeeting', 'MonthlyScheduleController@updateMeeting');
     Route::get('getAssignments', 'MonthlyScheduleController@getAssignments');
     Route::get('getPublishers/{meeting_id}/{assignment}', 'MonthlyScheduleController@getPublishers');
+    Route::post('addEvent', 'MonthlyScheduleController@addEvent');
 });

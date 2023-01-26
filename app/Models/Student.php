@@ -36,4 +36,9 @@ class Student extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function life_ministry_events()
+    {
+        return $this->hasMany(LifeMinistryEvent::class);
+    }
 }

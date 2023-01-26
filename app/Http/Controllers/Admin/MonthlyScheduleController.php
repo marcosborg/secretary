@@ -98,15 +98,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                'date' => 'Data da reunião',
-                'reason' => 'Motivo'
-            ]);
+                    'date' => 'Data da reunião',
+                    'reason' => 'Motivo'
+                ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                'date' => 'Data da reunião'
-            ]);
+                    'date' => 'Data da reunião'
+                ]);
         }
 
         $lifeMinistry = new LifeMinistry;
@@ -137,15 +137,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                'date' => 'Data da reunião',
-                'reason' => 'Motivo'
-            ]);
+                    'date' => 'Data da reunião',
+                    'reason' => 'Motivo'
+                ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                'date' => 'Data da reunião'
-            ]);
+                    'date' => 'Data da reunião'
+                ]);
         }
 
         $lifeMinistry = LifeMinistry::find($request->id);
@@ -170,29 +170,56 @@ class MonthlyScheduleController extends Controller
 
     public function getPublishers(Request $request)
     {
-        $studants = Student::with('assignments')
-            ->whereHas('assignments', function ($query) use ($request) {
-                $query->where('id', $request->assignment);
-            })
+        $studants = Student::whereHas('assignments', function ($query) use ($request) {
+            $query->where('id', $request->assignment);
+        })
             ->get();
 
-        $studantsOrdered = collect();
+        $orderedStudents = [];
 
-        foreach ($studants as $studant) {
+        foreach ($studants as $student) {
+
             $lifeMinistryEvent = LifeMinistryEvent::where([
                 'assignment_id' => $request->assignment,
-                'student_id' => $studant->id
+                'student_id' => $student->id,
             ])
-                ->with('life_ministry', function($q) {
-                    $q->orderBy('date', 'DESC');
-                })
+                ->with('life_ministry')
+                ->orderBy(LifeMinistry::select('date')->whereColumn('id', 'life_ministry_id'), 'desc')
                 ->first();
-            $studantsOrdered->add([
-                'studant' => $studant,
-                'date' => $lifeMinistryEvent->lifeMinistery->date
-            ]);
+
+            if (isset($lifeMinistryEvent->life_ministry)) {
+                $orderedStudents[] = [
+                    'student' => $student->name,
+                    'student_id' => $student->id,
+                    'date' => $lifeMinistryEvent->life_ministry->date,
+                ];
+            } else {
+                $orderedStudents[] = [
+                    'student' => $student->name,
+                    'student_id' => $student->id,
+                    'date' => null,
+                ];
+            }
         }
 
-        return $studantsOrdered;
+        return collect($orderedStudents)->sortBy('date')->values()->all();
+    }
+
+    public function addEvent(Request $request)
+    {
+
+        $request->validate([
+            'assignment' => 'required',
+            'publisher' => 'required',
+        ], [], [
+                'assignment' => 'Designação',
+                'publisher' => 'Irmão/ irmã designado(a)',
+            ]);
+
+        $lifeMinistryEvent = new LifeMinistryEvent;
+        $lifeMinistryEvent->life_ministry_id = $request->meeting_id;
+        $lifeMinistryEvent->assignment_id = $request->assignment;
+        $lifeMinistryEvent->student_id = $request->publisher;
+        $lifeMinistryEvent->save();
     }
 }

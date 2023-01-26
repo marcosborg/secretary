@@ -33,7 +33,7 @@ class LifeMinistryEvent extends Model
     {
         return $this->belongsTo(LifeMinistry::class, 'life_ministry_id');
     }
-
+    
     public function assignment()
     {
         return $this->belongsTo(Assignment::class, 'assignment_id');

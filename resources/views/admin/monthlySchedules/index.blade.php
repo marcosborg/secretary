@@ -19,7 +19,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/forms/addMeeting" method="POST" id="createMeeting">
                 @csrf
@@ -53,7 +54,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Atualizar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/updateMeeting" method="POST" id="updateMeeting">
                 <input type="hidden" name="id">
@@ -88,7 +90,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar designação</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/addEvent" method="POST" id="addEvent">
                 <input type="hidden" name="meeting_id">
@@ -154,7 +157,7 @@
         $('#publisher select[name="publisher"]').html('')
         $.get('/admin/getAssignments').then((assignments) => {
             $('#addEventModal').modal('show');
-            let html = '<option selected disabled>Escolher</option>';
+            let html = '<option selected disabled value="">Escolher</option>';
             assignments.forEach(assignment => {
                 html += '<option value="' + assignment.id + '">' + assignment.name + '</option>';
             });
@@ -240,10 +243,41 @@
             $.LoadingOverlay('show');
             let meeting_id = $('#addEvent input[name="meeting_id"]').val();
             let assignment = $('#addEvent select[name="assignment"]').val();
-            $.get('/admin/getPublishers/' + meeting_id + '/' + assignment).then((resp) => {
+            $.get('/admin/getPublishers/' + meeting_id + '/' + assignment).then((students) => {
+                let html = '<option selected disabled value="">Escolher</option>';
+                students.forEach(student => {
+                    html += '<option value="' + student.student_id + '">' + student.student + '</option>';
+                });
+                $('#publisher select[name="publisher"]').html(html);
+                $('#publisher').removeClass('d-none');
                 $.LoadingOverlay('hide');
-                console.log(resp);
             });
+        });
+        $('#addEvent').ajaxForm({
+            beforeSubmit: () => {
+                $.LoadingOverlay('show');
+            },
+            success: (resp) => {
+                console.log(resp);
+                $.LoadingOverlay('hide');
+                Swal.fire(
+                    'Bom trabalho!',
+                    'A designação foi atribuida com sucesso!',
+                    'success'
+                ).then(() => {
+                    $('#addEventModal').modal('hide');
+                    ajax();
+                });
+            },
+            error: (err) => {
+                $.LoadingOverlay('hide');
+                let error = err.responseJSON.message;
+                Swal.fire(
+                    'Erro de validação!',
+                    error,
+                    'error'
+                );
+            }
         });
     });
     ajax = () => {
