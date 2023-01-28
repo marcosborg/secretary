@@ -19,8 +19,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/forms/addMeeting" method="POST" id="createMeeting">
                 @csrf
@@ -54,8 +53,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Atualizar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/updateMeeting" method="POST" id="updateMeeting">
                 <input type="hidden" name="id">
@@ -90,8 +88,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar designação</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/addEvent" method="POST" id="addEvent">
                 <input type="hidden" name="meeting_id">
@@ -120,8 +117,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Alterar designação</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
             </div>
             <form action="/admin/updateEvent" method="POST" id="updateEvent">
                 <input type="hidden" name="event_id">
@@ -137,7 +133,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-primary">Gravar</button>
-                    <button type="button" class="btn btn-danger">Apagar designação</button>
+                    <button type="button" class="btn btn-danger" onclick="deleteEvent()">Apagar designação</button>
                 </div>
             </form>
         </div>
@@ -284,8 +280,7 @@
             beforeSubmit: () => {
                 $.LoadingOverlay('show');
             },
-            success: (resp) => {
-                console.log(resp);
+            success: () => {
                 $.LoadingOverlay('hide');
                 Swal.fire(
                     'Bom trabalho!',
@@ -339,9 +334,32 @@
             $('#ajax').html(resp);
             $('.sortable').sortable({
                 stop: (event, ui) => {
-                    console.log({
-                        event: event,
-                        ui: ui,
+                    let meeting_id = ui.item[0].attributes[3].value;
+                    let json = [];
+                    $('#meeting_' + meeting_id + ' li').each((i, v) => {
+                        json.push({
+                            event: $(v).data('event'),
+                            position: i
+                        });
+                    });
+                    json = JSON.stringify(json);
+                    var form = new FormData();
+                    form.append("json", json);
+                    var settings = {
+                        "url": "/admin/sortEvents",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        "processData": false,
+                        "mimeType": "multipart/form-data",
+                        "contentType": false,
+                        "data": form
+                    };
+
+                    $.ajax(settings).done(function() {
+
                     });
                 }
             });
@@ -417,6 +435,31 @@
                 $.LoadingOverlay('hide');
                 $('#updateEventModal').modal('show');
             });
+        });
+    }
+    deleteEvent = () => {
+        Swal.fire({
+            title: 'Tem a certeza?',
+            text: "Esta operação é irreversível!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, quero apagar!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.LoadingOverlay('show');
+                let event_id = $('#updateEvent input[name="event_id"]').val();
+                $.ajax('/admin/deleteEvent/' + event_id).then((resp) => {
+                    $.LoadingOverlay('hide');
+                    Swal.fire(
+                        'Apagado!',
+                        'Pode continuar.',
+                        'success'
+                    ).then(() => {
+                        $('#updateEventModal').modal('hide');
+                        ajax();
+                    });
+                });
+            }
         });
     }
 </script>

@@ -69,7 +69,7 @@ $yearCount = 0;
                                 </div>
                             </div>
                             @if ($meeting->lifeMinistryEvents->count() > 0)
-                            <ul class="list-group list-group-flush sortable">
+                            <ul class="list-group list-group-flush sortable" id="meeting_{{ $meeting->id }}">
                                 @foreach ($meeting->lifeMinistryEvents as $assignment)
                                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
                                     style="background: {{ $assignment->assignment->color }};"

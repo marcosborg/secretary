@@ -48,6 +48,6 @@ class LifeMinistry extends Model
 
     public function lifeMinistryEvents()
     {
-        return $this->hasMany(LifeMinistryEvent::class);
+        return $this->hasMany(LifeMinistryEvent::class)->orderBy('position');
     }
 }

@@ -248,4 +248,19 @@ class MonthlyScheduleController extends Controller
 
     }
 
+    public function sortEvents(Request $request)
+    {
+        $events = json_decode($request->json);
+        foreach ($events as $event) {
+            $lifeMinistryEvent = LifeMinistryEvent::find($event->event);
+            $lifeMinistryEvent->position = $event->position;
+            $lifeMinistryEvent->save();
+        }
+    }
+
+    public function deleteEvent(Request $request)
+    {
+        return LifeMinistryEvent::find($request->event_id)->delete();
+    }
+
 }
