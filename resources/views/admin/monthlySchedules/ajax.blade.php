@@ -59,8 +59,8 @@ $yearCount = 0;
                                     <button class="btn btn-default btn-sm" disabled>Adicionar</button>
                                 </div>
                             </div>
-                            <div class="alert alert-warning mx-2" role="alert">
-                                <h5 class="text-center">{{ $meeting->reason }}</h5>
+                            <div class="alert alert-warning mx-2 text-center" role="alert">
+                                <strong>{{ $meeting->reason }}</strong>
                             </div>
                             @else
                             <div class="card-body">
