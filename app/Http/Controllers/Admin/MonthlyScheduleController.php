@@ -278,7 +278,7 @@ class MonthlyScheduleController extends Controller
                 'lifeMinistryEvents.assignment'
             ])
             ->get();
-        return $lifeMinistries;
+        return view('admin.monthlySchedules.excel', compact('lifeMinistries'));
     }
 
 }
