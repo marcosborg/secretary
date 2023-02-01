@@ -7,6 +7,7 @@ use App\Models\Assignment;
 use App\Models\LifeMinistry;
 use App\Models\LifeMinistryEvent;
 use App\Models\Student;
+use App\Exports\LifeMinistryExport;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -271,11 +272,11 @@ class MonthlyScheduleController extends Controller
         $startdate = Carbon::createFromFormat('Y-m-d', $lifeMinistry->date)->startOfMonth()->toDateString();
         $enddate = Carbon::createFromFormat('Y-m-d', $lifeMinistry->date)->endOfMonth()->toDateString();
         $lifeMinistries = LifeMinistry::where('date', '>=', $startdate)
+            ->where('date', '<=', $enddate)
             ->with([
                 'lifeMinistryEvents.student',
                 'lifeMinistryEvents.assignment'
             ])
-            ->where('date', '<=', $enddate)
             ->get();
         return $lifeMinistries;
     }
