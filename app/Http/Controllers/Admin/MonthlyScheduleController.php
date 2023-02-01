@@ -263,4 +263,21 @@ class MonthlyScheduleController extends Controller
         return LifeMinistryEvent::find($request->event_id)->delete();
     }
 
+    public function monthToExcel(Request $request)
+    {
+        $meeting_id = $request->meeting_id;
+        $lifeMinistryEvent = LifeMinistryEvent::where('life_ministry_id', $meeting_id)->first();
+        $lifeMinistry = LifeMinistry::find($lifeMinistryEvent->life_ministry_id);
+        $startdate = Carbon::createFromFormat('Y-m-d', $lifeMinistry->date)->startOfMonth()->toDateString();
+        $enddate = Carbon::createFromFormat('Y-m-d', $lifeMinistry->date)->endOfMonth()->toDateString();
+        $lifeMinistries = LifeMinistry::where('date', '>=', $startdate)
+            ->with([
+                'lifeMinistryEvents.student',
+                'lifeMinistryEvents.assignment'
+            ])
+            ->where('date', '<=', $enddate)
+            ->get();
+        return $lifeMinistries;
+    }
+
 }

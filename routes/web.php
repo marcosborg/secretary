@@ -209,4 +209,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('updateEvent', 'MonthlyScheduleController@updateEvent');
     Route::post('sortEvents', 'MonthlyScheduleController@sortEvents');
     Route::get('deleteEvent/{event_id}', 'MonthlyScheduleController@deleteEvent');
+    Route::get('monthToExcel/{meeting_id}', 'MonthlyScheduleController@monthToExcel');
 });

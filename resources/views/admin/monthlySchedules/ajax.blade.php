@@ -91,9 +91,11 @@ $yearCount = 0;
                     </div>
                     @endforeach
                 </div>
+                <a href="/admin/monthToExcel/{{ $month[0]->id }}" class="btn btn-success">Exportar via Excel</a>
             </div>
             @endforeach
         </div>
     </div>
     @endforeach
 </div>
+<script>console.log({!! $lifeMinistries !!})</script>
