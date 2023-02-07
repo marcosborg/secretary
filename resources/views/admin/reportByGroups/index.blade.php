@@ -43,7 +43,7 @@
                     @endphp
                     <div class="tab-pane fade {{ $index == $year->months->count()-1 ? 'show active' : '' }}"
                         id="tab-pane-{{ $key }}-{{ $index }}" role="tabpanel" aria-labelledby="tab-{{ $key }}-{{ $index }}"
-                        tabindex="{{ $key }}-{{ $index }}">
+                        tabindex="{{ $index }}">
                         @if (session('status'))
                         <div class="alert alert-success mt-4">
                             {{ session('status') }}
