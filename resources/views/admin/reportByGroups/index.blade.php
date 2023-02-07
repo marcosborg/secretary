@@ -30,8 +30,8 @@
                     @foreach ($year->months as $index => $month)
                     <li class="nav-item" role="presentation">
                         <button class="nav-link {{ $index == $year->months->count()-1 ? 'active' : '' }}"
-                            id="tab-{{ $index }}" data-bs-toggle="tab" data-bs-target="#tab-pane-{{ $index }}"
-                            type="button" role="tab" aria-controls="tab-pane-{{ $index }}" aria-selected="true">{{
+                            id="tab-{{ $key }}-{{ $index }}" data-bs-toggle="tab" data-bs-target="#tab-pane-{{ $key }}-{{ $index }}"
+                            type="button" role="tab" aria-controls="tab-pane-{{ $key }}-{{ $index }}" aria-selected="true">{{
                             $month->name }}</button>
                     </li>
                     @endforeach
@@ -42,8 +42,8 @@
                     $missingReports = collect();
                     @endphp
                     <div class="tab-pane fade {{ $index == $year->months->count()-1 ? 'show active' : '' }}"
-                        id="tab-pane-{{ $index }}" role="tabpanel" aria-labelledby="tab-{{ $index }}"
-                        tabindex="{{ $index }}">
+                        id="tab-pane-{{ $key }}-{{ $index }}" role="tabpanel" aria-labelledby="tab-{{ $key }}-{{ $index }}"
+                        tabindex="{{ $key }}-{{ $index }}">
                         @if (session('status'))
                         <div class="alert alert-success mt-4">
                             {{ session('status') }}
