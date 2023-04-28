@@ -30,7 +30,7 @@ class ReportByGroupController extends Controller
         if ($group) {
             foreach ($years as $year) {
                 foreach ($year->months as $month) {
-                    $publishers = Publisher::where('group_id', $group->id)->with('responsibilities')->get();
+                    $publishers = Publisher::where('group_id', $group->id)->with('responsibilities')->orderBy('name')->get();
                     $regularPioneersCount = 0;
                     $pioneerCount = 0;
                     $publicationsTotal = 0;
