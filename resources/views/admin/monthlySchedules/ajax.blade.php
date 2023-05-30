@@ -74,7 +74,7 @@ $yearCount = 0;
                                 <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start" style="background: {{ $assignment->assignment->color }};" onclick="updateEvent({{ $assignment->id }})" data-meeting="{{ $meeting->id }}" data-event="{{ $assignment->id }}">
                                     <div class="ms-2 me-auto">
                                         <strong>{{ $assignment->assignment->name }}</strong><br>
-                                        {{ $assignment->student->name }}
+                                        {{ $assignment->student ? $assignment->student->name : '' }}
                                     </div>
                                 </li>
                                 @endforeach
