@@ -17,6 +17,7 @@ class GroupReportController extends Controller
 {
     public function index()
     {
+
         abort_if(Gate::denies('group_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $user = Auth::user();
@@ -29,7 +30,7 @@ class GroupReportController extends Controller
         if ($group) {
             foreach ($years as $year) {
                 foreach ($year->months as $month) {
-                    $publishers = Publisher::where('group_id', $group->id)->with('responsibilities')->get();
+                    $publishers = Publisher::where('group_id', $group->id)->with('responsibilities')->orderBy('name')->get();
                     $regularPioneersCount = 0;
                     $pioneerCount = 0;
                     $publicationsTotal = 0;
