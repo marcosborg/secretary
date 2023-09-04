@@ -34,6 +34,6 @@ class Year extends Model
 
     public function months()
     {
-        return $this->hasMany(Month::class);
+        return $this->hasMany(Month::class)->orderBy('number');
     }
 }
