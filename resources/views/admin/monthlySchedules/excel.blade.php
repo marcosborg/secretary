@@ -49,7 +49,7 @@
                             {{ $lifeMinistryEvent->assignment->name }}
                         </td>
                         <td>
-                            {{ $lifeMinistryEvent->student->name }}
+                            {{ $lifeMinistryEvent->student->name ?? 'Eliminado' }}
                         </td>
                         <td class="d-none">
                             {{ $lifeMinistryEvent->position }}
