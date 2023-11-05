@@ -38,6 +38,19 @@
                 <span class="help-block">{{ trans('cruds.report.fields.publisher_helper') }}</span>
             </div>
             <div class="form-group">
+                <div class="form-check {{ $errors->has('preached') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="preached" value="0">
+                    <input class="form-check-input" type="checkbox" name="preached" id="preached" value="1" {{ old('preached', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="preached">{{ trans('cruds.report.fields.preached') }}</label>
+                </div>
+                @if($errors->has('preached'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('preached') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.report.fields.preached_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="publications">{{ trans('cruds.report.fields.publications') }}</label>
                 <input class="form-control {{ $errors->has('publications') ? 'is-invalid' : '' }}" type="number" name="publications" id="publications" value="{{ old('publications', '0') }}" step="1" required>
                 @if($errors->has('publications'))

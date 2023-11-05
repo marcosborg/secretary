@@ -53,6 +53,10 @@ class ReportController extends Controller
                 return $row->publisher ? $row->publisher->name : '';
             });
 
+            $table->editColumn('preached', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->preached ? 'checked' : null) . '>';
+            });
+
             $table->editColumn('publications', function ($row) {
                 return $row->publications ? $row->publications : '';
             });
@@ -75,7 +79,7 @@ class ReportController extends Controller
                 return $row->observations ? $row->observations : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'month', 'publisher', 'pioneer']);
+            $table->rawColumns(['actions', 'placeholder', 'month', 'publisher', 'preached', 'pioneer']);
 
             return $table->make(true);
         }

@@ -41,6 +41,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.report.fields.preached') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $report->preached ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.report.fields.publications') }}
                         </th>
                         <td>

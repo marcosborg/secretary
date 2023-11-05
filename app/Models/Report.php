@@ -25,6 +25,7 @@ class Report extends Model
     protected $fillable = [
         'month_id',
         'publisher_id',
+        'preached',
         'publications',
         'videos',
         'hours',

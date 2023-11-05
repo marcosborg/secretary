@@ -299,6 +299,8 @@ return [
             'observations_helper' => ' ',
             'pioneer'             => 'Pioneiro',
             'pioneer_helper'      => ' ',
+            'preached'            => 'Participou no ministério?',
+            'preached_helper'     => ' ',
         ],
     ],
     'meeting' => [

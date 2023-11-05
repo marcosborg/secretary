@@ -31,6 +31,9 @@
                         {{ trans('cruds.report.fields.publisher') }}
                     </th>
                     <th>
+                        {{ trans('cruds.report.fields.preached') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.report.fields.publications') }}
                     </th>
                     <th>
@@ -110,6 +113,7 @@
 { data: 'id', name: 'id' },
 { data: 'month_name', name: 'month.name' },
 { data: 'publisher_name', name: 'publisher.name' },
+{ data: 'preached', name: 'preached' },
 { data: 'publications', name: 'publications' },
 { data: 'videos', name: 'videos' },
 { data: 'hours', name: 'hours' },
