@@ -153,6 +153,7 @@ class GroupReportController extends Controller
         foreach ($forms as $report_id => $form) {
             $report = Report::find($report_id);
             $pioneer = false;
+            $preached = false;
             foreach ($form as $value) {
                 $column = $value['column'];
                 if ($column == 'pioneer') {
@@ -161,6 +162,14 @@ class GroupReportController extends Controller
                 $report->$column = $value['value'];
                 if ($pioneer == false) {
                     $report->pioneer = 0;
+                }
+                $column = $value['column'];
+                if ($column == 'preached') {
+                    $preached = true;
+                }
+                $report->$column = $value['value'];
+                if ($preached == false) {
+                    $report->preached = 0;
                 }
             }
             $report->save();

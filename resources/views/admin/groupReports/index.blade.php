@@ -53,10 +53,8 @@
                                     <tr>
                                         <th>Nome</th>
                                         <th>Pioneiro</th>
-                                        <th>Publicações</th>
-                                        <th>Videos</th>
+                                        <th>Participou no ministério?</th>
                                         <th>Horas</th>
-                                        <th>Revisitas</th>
                                         <th>Estudos</th>
                                         <th>Observações</th>
                                     </tr>
@@ -65,7 +63,7 @@
                                     @foreach ($month->publishers as $publisher)
                                     @if ($publisher->report)
                                     @php
-                                        if($publisher->report->hours == 0) {
+                                        if(!$publisher->report->preached) {
                                             $missingReports->add($publisher->name);
                                         }
                                     @endphp
@@ -83,19 +81,19 @@
                                                 </label>
                                             </div>
                                         </td>
-                                        <td><input type="number" name="report-{{ $publisher->report->id }}-publications"
-                                                value="{{ $publisher->report->publications }}" class="form-control"
-                                                required>
-                                        </td>
-                                        <td><input type="number" name="report-{{ $publisher->report->id }}-videos"
-                                                value="{{ $publisher->report->videos }}" class="form-control" required>
+                                        <td>
+                                            <div class="form-check mt-1">
+                                                <input class="form-check-input" type="checkbox" value="1"
+                                                    name="report-{{ $publisher->report->id }}-preached"
+                                                    id="preached{{ $publisher->id }}" {{ $publisher->report->preached ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="preached{{ $publisher->id }}">
+                                                    Sim
+                                                </label>
+                                            </div>
                                         </td>
                                         <td><input type="number" name="report-{{ $publisher->report->id }}-hours"
                                                 value="{{ $publisher->report->hours }}" class="form-control" required>
                                         </td>
-                                        <td><input type="number" name="report-{{ $publisher->report->id }}-revisits"
-                                                value="{{ $publisher->report->revisits }}" class="form-control"
-                                                required></td>
                                         <td><input type="number" name="report-{{ $publisher->report->id }}-studies"
                                                 value="{{ $publisher->report->studies }}" class="form-control" required>
                                         </td>
@@ -110,10 +108,8 @@
                                     <tr>
                                         <th>Nome</th>
                                         <th>Pioneiro</th>
-                                        <th>Publicações</th>
-                                        <th>Videos</th>
+                                        <th>Participou no ministério?</th>
                                         <th>Horas</th>
-                                        <th>Revisitas</th>
                                         <th>Estudos</th>
                                         <th>Observações</th>
                                     </tr>
@@ -134,10 +130,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Publicadores</th>
-                                    <th>Publicações</th>
-                                    <th>Videos</th>
                                     <th>Horas</th>
-                                    <th>Revisitas</th>
                                     <th>Estudos</th>
                                 </tr>
                             </thead>
@@ -146,42 +139,27 @@
                                     <th>Publicadores</th>
                                     <td>{{ $month->publishers->count() - $month->pioneerCount -
                                         $month->regularPioneersCount }}</td>
-                                    <td>{{ $month->publicationsTotal - $month->publicationsPioneersTotal -
-                                        $month->publicationsRegularPioneersTotal }}</td>
-                                    <td>{{ $month->videosTotal - $month->videosPioneersTotal -
-                                        $month->videosRegularPioneersTotal }}</td>
                                     <td>{{ $month->hoursTotal - $month->hoursPioneersTotal -
                                         $month->hoursRegularPioneersTotal }}</td>
-                                    <td>{{ $month->revisitsTotal - $month->revisitsPioneersTotal -
-                                        $month->revisitsRegularPioneersTotal }}</td>
                                     <td>{{ $month->studiesTotal - $month->studiesPioneersTotal -
                                         $month->studiesRegularPioneersTotal }}</td>
                                 </tr>
                                 <tr>
                                     <th>Pioneiros auxiliares</th>
                                     <td>{{ $month->pioneerCount }}</td>
-                                    <td>{{ $month->publicationsPioneersTotal }}</td>
-                                    <td>{{ $month->videosPioneersTotal }}</td>
                                     <td>{{ $month->hoursPioneersTotal }}</td>
-                                    <td>{{ $month->revisitsPioneersTotal }}</td>
                                     <td>{{ $month->studiesPioneersTotal }}</td>
                                 </tr>
                                 <tr>
                                     <th>Pioneiros regulares</th>
                                     <td>{{ $month->regularPioneersCount }}</td>
-                                    <td>{{ $month->publicationsRegularPioneersTotal }}</td>
-                                    <td>{{ $month->videosRegularPioneersTotal }}</td>
                                     <td>{{ $month->hoursRegularPioneersTotal }}</td>
-                                    <td>{{ $month->revisitsRegularPioneersTotal }}</td>
                                     <td>{{ $month->studiesRegularPioneersTotal }}</td>
                                 </tr>
                                 <tr>
                                     <th>Totais</th>
                                     <th>{{ $month->publishers->count() }}</th>
-                                    <th>{{ $month->publicationsTotal }}</th>
-                                    <th>{{ $month->videosTotal }}</th>
                                     <th>{{ $month->hoursTotal }}</th>
-                                    <th>{{ $month->revisitsTotal }}</th>
                                     <th>{{ $month->studiesTotal }}</th>
                                 </tr>
                             </tbody>
