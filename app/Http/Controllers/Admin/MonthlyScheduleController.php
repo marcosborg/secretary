@@ -99,15 +99,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                    'date' => 'Data da reunião',
-                    'reason' => 'Motivo'
-                ]);
+                'date' => 'Data da reunião',
+                'reason' => 'Motivo'
+            ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                    'date' => 'Data da reunião'
-                ]);
+                'date' => 'Data da reunião'
+            ]);
         }
 
         $lifeMinistry = new LifeMinistry;
@@ -138,15 +138,15 @@ class MonthlyScheduleController extends Controller
                 'date' => 'required|date',
                 'reason' => 'required'
             ], [], [
-                    'date' => 'Data da reunião',
-                    'reason' => 'Motivo'
-                ]);
+                'date' => 'Data da reunião',
+                'reason' => 'Motivo'
+            ]);
         } else {
             $request->validate([
                 'date' => 'required|date',
             ], [], [
-                    'date' => 'Data da reunião'
-                ]);
+                'date' => 'Data da reunião'
+            ]);
         }
 
         $lifeMinistry = LifeMinistry::find($request->id);
@@ -213,9 +213,9 @@ class MonthlyScheduleController extends Controller
             'assignment' => 'required',
             'publisher' => 'required',
         ], [], [
-                'assignment' => 'Designação',
-                'publisher' => 'Irmão/ irmã designado(a)',
-            ]);
+            'assignment' => 'Designação',
+            'publisher' => 'Irmão/ irmã designado(a)',
+        ]);
 
         $lifeMinistryEvent = new LifeMinistryEvent;
         $lifeMinistryEvent->life_ministry_id = $request->meeting_id;
@@ -236,13 +236,38 @@ class MonthlyScheduleController extends Controller
 
     }
 
+    public function getFreePublishers($assignment_id, $event_id)
+    {
+
+        $event = LifeMinistryEvent::find($event_id)->load(['life_ministry', 'assignment']);
+
+        $students = Student::whereHas('assignments', function ($assignment) use ($event) {
+            $assignment->where('id', $event->assignment->id);
+        })
+            ->get();
+
+        $freeStudents = collect();
+
+        foreach ($students as $student) {
+            $life_ministry_event = LifeMinistryEvent::where([
+                'life_ministry_id' => $event->life_ministry_id,
+                'student_id' => $student->id
+            ])->first();
+            if (!$life_ministry_event) {
+                $freeStudents->add($student);
+            }
+        }
+
+        return $freeStudents;
+    }
+
     public function updateEvent(Request $request)
     {
         $request->validate([
             'publisher' => 'required',
         ], [], [
-                'publisher' => 'Irmão/ irmã a designar',
-            ]);
+            'publisher' => 'Irmão/ irmã a designar',
+        ]);
         $lifeMinistryEvent = LifeMinistryEvent::find($request->event_id);
         $lifeMinistryEvent->student_id = $request->publisher;
         $lifeMinistryEvent->save();

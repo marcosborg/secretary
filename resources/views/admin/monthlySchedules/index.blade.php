@@ -19,7 +19,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/forms/addMeeting" method="POST" id="createMeeting">
                 @csrf
@@ -53,7 +54,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Atualizar reunião</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/updateMeeting" method="POST" id="updateMeeting">
                 <input type="hidden" name="id">
@@ -88,7 +90,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Adicionar designação</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/addEvent" method="POST" id="addEvent">
                 <input type="hidden" name="meeting_id">
@@ -117,7 +120,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Alterar designação</h3>
-                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-close"></i></button>
+                <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fas fa-close"></i></button>
             </div>
             <form action="/admin/updateEvent" method="POST" id="updateEvent">
                 <input type="hidden" name="event_id">
@@ -125,6 +129,7 @@
                 <div class="modal-body">
                     <h5 id="assignment"></h5>
                     <h4 id="student"></h4>
+                    <strong>Disponíveis: </strong><div id="updateAvailable" style="margin-bottom: 20px;"></div>
                     <div class="form-group">
                         <label>Irmão/ irmã a designar</label>
                         <select name="publisher" class="form-control select2"></select>
@@ -434,6 +439,14 @@
                 $('#student').text(event.student.name);
                 $.LoadingOverlay('hide');
                 $('#updateEventModal').modal('show');
+                $.get('/admin/getFreePublishers/' + event.assignment_id + '/' + event_id).then((resp) => {
+                    console.log(resp);
+                    let html = '';
+                    resp.forEach(element => {
+                        html += '<span class="badge badge-primary">' + element.name + '</span> ';
+                    });
+                    $('#updateAvailable').html(html);
+                });
             });
         });
     }
