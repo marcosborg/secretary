@@ -24,6 +24,7 @@ class LifeMinistryEvent extends Model
         'life_ministry_id',
         'assignment_id',
         'student_id',
+        'position',
         'created_at',
         'updated_at',
         'deleted_at',

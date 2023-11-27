@@ -275,9 +275,10 @@ class MonthlyScheduleController extends Controller
             ->where('date', '<=', $enddate)
             ->with([
                 'lifeMinistryEvents.student',
-                'lifeMinistryEvents.assignment'
+                'lifeMinistryEvents.assignment',
             ])
             ->get();
+
         return view('admin.monthlySchedules.excel', compact('lifeMinistries'));
     }
 
