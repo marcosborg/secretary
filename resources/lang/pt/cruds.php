@@ -529,6 +529,8 @@ return [
             'deleted_at_helper' => ' ',
             'color'             => 'Cor',
             'color_helper'      => ' ',
+            'technical'         => 'Designações técnicas',
+            'technical_helper'  => ' ',
         ],
     ],
     'lifeMinistry' => [

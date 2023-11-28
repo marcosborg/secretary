@@ -4,6 +4,13 @@
 <div class="card">
     <div class="card-header">
         {{ trans('cruds.monthlySchedule.title') }}
+        <div class="form-check pull-right">
+            <input class="form-check-input" type="checkbox" value="" id="technical_checkbox"
+                onchange="changeTechnical()" {{ session()->get('technical') ? 'checked' : '' }}>
+            <label class="form-check-label" for="technical_checkbox">
+                Designações técnicas
+            </label>
+        </div>
     </div>
 
     <div class="card-body">
@@ -129,7 +136,8 @@
                 <div class="modal-body">
                     <h5 id="assignment"></h5>
                     <h4 id="student"></h4>
-                    <strong>Disponíveis: </strong><div id="updateAvailable" style="margin-bottom: 20px;"></div>
+                    <strong>Disponíveis: </strong>
+                    <div id="updateAvailable" style="margin-bottom: 20px;"></div>
                     <div class="form-group">
                         <label>Irmão/ irmã a designar</label>
                         <select name="publisher" class="form-control select2"></select>
@@ -440,7 +448,6 @@
                 $.LoadingOverlay('hide');
                 $('#updateEventModal').modal('show');
                 $.get('/admin/getFreePublishers/' + event.assignment_id + '/' + event_id).then((resp) => {
-                    console.log(resp);
                     let html = '';
                     resp.forEach(element => {
                         html += '<span class="badge badge-primary">' + element.name + '</span> ';
@@ -473,6 +480,13 @@
                     });
                 });
             }
+        });
+    }
+</script>
+<script>
+    changeTechnical = () => {
+        $.get('/admin/changeTechnical').then(() => {
+            location.reload();
         });
     }
 </script>

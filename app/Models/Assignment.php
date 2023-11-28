@@ -23,6 +23,7 @@ class Assignment extends Model
     protected $fillable = [
         'name',
         'color',
+        'technical',
         'created_at',
         'updated_at',
         'deleted_at',

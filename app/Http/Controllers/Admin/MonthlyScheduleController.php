@@ -77,6 +77,13 @@ class MonthlyScheduleController extends Controller
             }
             $lifeMinistry->year = $year;
             $lifeMinistry->month = $month;
+            foreach ($lifeMinistry->lifeMinistryEvents as $lifeMinistryEvent) {
+                $studentLifeMinistryEventsCount = LifeMinistryEvent::where([
+                    'life_ministry_id' => $lifeMinistry->id,
+                    'student_id' => $lifeMinistryEvent->student_id
+                ])->count();
+                $lifeMinistryEvent->student_count = $studentLifeMinistryEventsCount;
+            }
             $years->add($lifeMinistry);
         }
 
@@ -86,6 +93,7 @@ class MonthlyScheduleController extends Controller
             $year = $year->groupBy('month');
             $lifeMinistries[$key] = $year;
         }
+
         return view('admin.monthlySchedules.ajax')->with([
             'lifeMinistries' => $lifeMinistries,
         ]);
@@ -166,7 +174,15 @@ class MonthlyScheduleController extends Controller
 
     public function getAssignments()
     {
-        return Assignment::all();
+
+        $technical = session()->get('technical');
+
+        if ($technical) {
+            return Assignment::where('technical', $technical)->get();
+        } else {
+            return Assignment::where('technical', 0)->get();
+        }
+
     }
 
     public function getPublishers(Request $request)
@@ -305,6 +321,16 @@ class MonthlyScheduleController extends Controller
             ->get();
 
         return view('admin.monthlySchedules.excel', compact('lifeMinistries'));
+    }
+
+    public function changeTechnical()
+    {
+        $technical = session()->get('technical');
+        if ($technical) {
+            session()->forget('technical');
+        } else {
+            session()->put('technical', true);
+        }
     }
 
 }

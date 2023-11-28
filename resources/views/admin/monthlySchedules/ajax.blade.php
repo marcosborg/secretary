@@ -7,7 +7,9 @@ $yearCount = 0;
     $yearCount++;
     @endphp
     <li class="nav-item" role="presentation">
-        <button class="nav-link {{ $lifeMinistries->count() == $yearCount ? 'active' : '' }}" id="tab-{{ $key }}" data-bs-toggle="tab" data-bs-target="#tab-pane-{{ $key }}" type="button" role="tab" aria-controls="tab-pane-{{ $key }}" aria-selected="true">{{ $key }}</button>
+        <button class="nav-link {{ $lifeMinistries->count() == $yearCount ? 'active' : '' }}" id="tab-{{ $key }}"
+            data-bs-toggle="tab" data-bs-target="#tab-pane-{{ $key }}" type="button" role="tab"
+            aria-controls="tab-pane-{{ $key }}" aria-selected="true">{{ $key }}</button>
     </li>
     @endforeach
 </ul>
@@ -19,7 +21,8 @@ $yearCount = 0;
     @php
     $yearCount++;
     @endphp
-    <div class="tab-pane fade show {{ $lifeMinistries->count() == $yearCount ? 'active' : '' }}" id="tab-pane-{{ $key }}" role="tabpanel" aria-labelledby="tab-{{ $key }}" tabindex="{{ $yearCount }}">
+    <div class="tab-pane fade show {{ $lifeMinistries->count() == $yearCount ? 'active' : '' }}"
+        id="tab-pane-{{ $key }}" role="tabpanel" aria-labelledby="tab-{{ $key }}" tabindex="{{ $yearCount }}">
         @php
         $monthCount = 0;
         @endphp
@@ -29,7 +32,9 @@ $yearCount = 0;
             $monthCount++;
             @endphp
             <li class="nav-item" role="presentation">
-                <button class="nav-link {{ $monthCount == $year->count() ? 'active' : '' }}" id="tab-{{ $monthName }}" data-bs-toggle="tab" data-bs-target="#tab-pane-{{ $monthName }}" type="button" role="tab" aria-controls="tab-pane-{{ $monthName }}" aria-selected="true">{{ $monthName }}</button>
+                <button class="nav-link {{ $monthCount == $year->count() ? 'active' : '' }}" id="tab-{{ $monthName }}"
+                    data-bs-toggle="tab" data-bs-target="#tab-pane-{{ $monthName }}" type="button" role="tab"
+                    aria-controls="tab-pane-{{ $monthName }}" aria-selected="true">{{ $monthName }}</button>
             </li>
             @endforeach
         </ul>
@@ -41,7 +46,9 @@ $yearCount = 0;
             @php
             $monthCount++;
             @endphp
-            <div class="tab-pane fade show {{ $monthCount == $year->count() ? 'active' : '' }}" id="tab-pane-{{ $monthName }}" role="tabpanel" aria-labelledby="tab-{{ $monthName }}" tabindex="{{ $monthCount }}">
+            <div class="tab-pane fade show {{ $monthCount == $year->count() ? 'active' : '' }}"
+                id="tab-pane-{{ $monthName }}" role="tabpanel" aria-labelledby="tab-{{ $monthName }}"
+                tabindex="{{ $monthCount }}">
                 <div class="row">
                     @foreach($month as $meeting)
                     <div class="col">
@@ -49,8 +56,10 @@ $yearCount = 0;
                             <div class="card-header bg-info text-white text-uppercase d-flex justify-content-between">
                                 <h5 class="card-title">Dia {{ \Carbon\Carbon::parse($meeting->date)->day }}</h5>
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button class="btn btn-sm text-white" onclick="editMeeting({{ $meeting->id }})"><i class="fas fa-edit"></i></button>
-                                    <button class="btn btn-sm text-white" onclick="deleteMeeting({{ $meeting->id }})"><i class="fas fa-trash"></i></button>
+                                    <button class="btn btn-sm text-white" onclick="editMeeting({{ $meeting->id }})"><i
+                                            class="fas fa-edit"></i></button>
+                                    <button class="btn btn-sm text-white" onclick="deleteMeeting({{ $meeting->id }})"><i
+                                            class="fas fa-trash"></i></button>
                                 </div>
                             </div>
                             @if ($meeting->disabled)
@@ -65,18 +74,27 @@ $yearCount = 0;
                             @else
                             <div class="card-body">
                                 <div class="text-center">
-                                    <button class="btn btn-default btn-sm" onclick="addEvent({{ $meeting->id }})">Adicionar</button>
+                                    <button class="btn btn-default btn-sm"
+                                        onclick="addEvent({{ $meeting->id }})">Adicionar</button>
                                 </div>
                             </div>
                             @if ($meeting->lifeMinistryEvents->count() > 0)
                             <ul class="list-group list-group-flush sortable" id="meeting_{{ $meeting->id }}">
                                 @foreach ($meeting->lifeMinistryEvents as $assignment)
-                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start" style="background: {{ $assignment->assignment->color }};" onclick="updateEvent({{ $assignment->id }})" data-meeting="{{ $meeting->id }}" data-event="{{ $assignment->id }}">
+                                @if ($assignment->assignment->technical && session()->has('technical') ||
+                                !$assignment->assignment->technical)
+                                <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
+                                    style="background: {{ $assignment->assignment->color }};"
+                                    onclick="updateEvent({{ $assignment->id }})" data-meeting="{{ $meeting->id }}"
+                                    data-event="{{ $assignment->id }}">
                                     <div class="ms-2 me-auto">
                                         <strong>{{ $assignment->assignment->name }}</strong><br>
+                                        {!! $assignment->student_count > 1 ? '<span class="badge badge-danger">&nbsp;' .
+                                            $assignment->student_count . '</span>' : '' !!}
                                         {{ $assignment->student ? $assignment->student->name : 'Eliminado' }}
                                     </div>
                                 </li>
+                                @endif
                                 @endforeach
                             </ul>
                             @else
@@ -98,4 +116,3 @@ $yearCount = 0;
     </div>
     @endforeach
 </div>
-<script>console.log({!! $lifeMinistries !!})</script>

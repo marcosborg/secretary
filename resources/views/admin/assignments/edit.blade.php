@@ -31,6 +31,19 @@
                 <span class="help-block">{{ trans('cruds.assignment.fields.color_helper') }}</span>
             </div>
             <div class="form-group">
+                <div class="form-check {{ $errors->has('technical') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="technical" value="0">
+                    <input class="form-check-input" type="checkbox" name="technical" id="technical" value="1" {{ $assignment->technical || old('technical', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="technical">{{ trans('cruds.assignment.fields.technical') }}</label>
+                </div>
+                @if($errors->has('technical'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('technical') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.assignment.fields.technical_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

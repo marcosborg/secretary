@@ -32,6 +32,9 @@
                             {{ trans('cruds.assignment.fields.color') }}
                         </th>
                         <th>
+                            {{ trans('cruds.assignment.fields.technical') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,6 +53,10 @@
                         </td>
                         <td>
                             <div class="color-item" style="background: {{ $assignment->color ?? '' }};"></div>
+                        </td>
+                        <td>
+                            <span style="display:none">{{ $assignment->technical ?? '' }}</span>
+                            <input type="checkbox" disabled="disabled" {{ $assignment->technical ? 'checked' : '' }}>
                         </td>
                         <td>
                             @can('assignment_show')

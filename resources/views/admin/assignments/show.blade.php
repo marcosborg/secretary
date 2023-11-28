@@ -39,6 +39,14 @@
                             {{ $assignment->color }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.assignment.fields.technical') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $assignment->technical ? 'checked' : '' }}>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
