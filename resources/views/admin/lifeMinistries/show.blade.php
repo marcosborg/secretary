@@ -47,6 +47,14 @@
                             {{ $lifeMinistry->reason }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.lifeMinistry.fields.meeting') }}
+                        </th>
+                        <td>
+                            {{ App\Models\LifeMinistry::MEETING_RADIO[$lifeMinistry->meeting] ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -43,6 +43,21 @@
                 <span class="help-block">{{ trans('cruds.lifeMinistry.fields.reason_helper') }}</span>
             </div>
             <div class="form-group">
+                <label class="required">{{ trans('cruds.lifeMinistry.fields.meeting') }}</label>
+                @foreach(App\Models\LifeMinistry::MEETING_RADIO as $key => $label)
+                    <div class="form-check {{ $errors->has('meeting') ? 'is-invalid' : '' }}">
+                        <input class="form-check-input" type="radio" id="meeting_{{ $key }}" name="meeting" value="{{ $key }}" {{ old('meeting', '1') === (string) $key ? 'checked' : '' }} required>
+                        <label class="form-check-label" for="meeting_{{ $key }}">{{ $label }}</label>
+                    </div>
+                @endforeach
+                @if($errors->has('meeting'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('meeting') }}
+                    </div>
+                @endif
+                <span class="help-block">{{ trans('cruds.lifeMinistry.fields.meeting_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

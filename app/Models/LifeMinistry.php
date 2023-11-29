@@ -22,10 +22,16 @@ class LifeMinistry extends Model
         'deleted_at',
     ];
 
+    public const MEETING_RADIO = [
+        '1' => 'Vida e ministério cristãos',
+        '2' => 'Reunião pública',
+    ];
+
     protected $fillable = [
         'date',
         'disabled',
         'reason',
+        'meeting',
         'created_at',
         'updated_at',
         'deleted_at',

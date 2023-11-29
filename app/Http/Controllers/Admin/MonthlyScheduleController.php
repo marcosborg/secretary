@@ -7,7 +7,6 @@ use App\Models\Assignment;
 use App\Models\LifeMinistry;
 use App\Models\LifeMinistryEvent;
 use App\Models\Student;
-use App\Exports\LifeMinistryExport;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;

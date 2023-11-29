@@ -11,6 +11,21 @@
                 Designações técnicas
             </label>
         </div>
+        <div class="pull-right" style="margin-right: 40px;">
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="meeting_radio" id="meeting_radio_1" value="1"
+                    checked>
+                <label class="form-check-label" for="meeting_radio_1">
+                    Reunião Vida e Ministério Cristãos
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="meeting_radio" id="meeting_radio_2" value="1">
+                <label class="form-check-label" for="meeting_radio_2">
+                    Reunião Pública
+                </label>
+            </div>
+        </div>
     </div>
 
     <div class="card-body">

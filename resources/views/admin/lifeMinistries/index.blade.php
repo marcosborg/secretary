@@ -35,6 +35,9 @@
                             {{ trans('cruds.lifeMinistry.fields.reason') }}
                         </th>
                         <th>
+                            {{ trans('cruds.lifeMinistry.fields.meeting') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -57,6 +60,9 @@
                             </td>
                             <td>
                                 {{ $lifeMinistry->reason ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\Models\LifeMinistry::MEETING_RADIO[$lifeMinistry->meeting] ?? '' }}
                             </td>
                             <td>
                                 @can('life_ministry_show')
