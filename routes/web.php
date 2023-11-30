@@ -212,4 +212,5 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('monthToExcel/{meeting_id}', 'MonthlyScheduleController@monthToExcel');
     Route::get('getFreePublishers/{assignment_id}/{event_id}', 'MonthlyScheduleController@getFreePublishers');
     Route::get('changeTechnical', 'MonthlyScheduleController@changeTechnical');
+    Route::get('changeMeetingRadio/{value}', 'MonthlyScheduleController@changeMeetingRadio');
 });

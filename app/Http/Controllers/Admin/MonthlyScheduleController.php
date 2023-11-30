@@ -18,6 +18,10 @@ class MonthlyScheduleController extends Controller
     {
         abort_if(Gate::denies('monthly_schedule_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        if (!session()->has('meeting_radio')) {
+            session()->put('meeting_radio', 1);
+        }
+
         return view('admin.monthlySchedules.index');
     }
 
@@ -123,6 +127,7 @@ class MonthlyScheduleController extends Controller
             $lifeMinistry->disabled = true;
         }
         $lifeMinistry->reason = $request->reason;
+        $lifeMinistry->meeting = $request->meeting_type;
         $lifeMinistry->save();
 
         return $lifeMinistry;
@@ -330,6 +335,11 @@ class MonthlyScheduleController extends Controller
         } else {
             session()->put('technical', true);
         }
+    }
+
+    public function changeMeetingRadio($value)
+    {
+        session()->put('meeting_radio', $value);
     }
 
 }

@@ -13,14 +13,15 @@
         </div>
         <div class="pull-right" style="margin-right: 40px;">
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="meeting_radio" id="meeting_radio_1" value="1"
-                    checked>
+                <input class="form-check-input" type="radio" name="meeting_radio" id="meeting_radio_1" value="1" {{
+                    session()->get('meeting_radio') == 1 ? 'checked' : '' }}>
                 <label class="form-check-label" for="meeting_radio_1">
                     Reunião Vida e Ministério Cristãos
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="meeting_radio" id="meeting_radio_2" value="1">
+                <input class="form-check-input" type="radio" name="meeting_radio" id="meeting_radio_2" value="2" {{
+                    session()->get('meeting_radio') == 2 ? 'checked' : '' }}>
                 <label class="form-check-label" for="meeting_radio_2">
                     Reunião Pública
                 </label>
@@ -51,15 +52,35 @@
                         <label>Data da reunião</label>
                         <input type="date" class="form-control" name="date">
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="1" id="disabled" name="disabled">
-                        <label class="form-check-label" for="disabled">
-                            Não será realizada
-                        </label>
-                    </div>
-                    <div class="form-group d-none mt-4" id="reason">
-                        <label>Motivo</label>
-                        <input type="text" class="form-control" name="reason">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="1" id="disabled" name="disabled">
+                                <label class="form-check-label" for="disabled">
+                                    Não será realizada
+                                </label>
+                            </div>
+                            <div class="form-group d-none mt-4" id="reason">
+                                <label>Motivo</label>
+                                <input type="text" class="form-control" name="reason">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="meeting_type" id="meetingRadios1"
+                                    value="1" checked>
+                                <label class="form-check-label" for="meetingRadios1">
+                                    Reunião Vida e Ministério
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="meeting_type" id="meetingRadios2"
+                                    value="2">
+                                <label class="form-check-label" for="meetingRadios2">
+                                    Reunião pública
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -243,6 +264,7 @@
                 $('#addMeeting input[name="date"]').val('');
                 $('#addMeeting input[name="disabled"]').prop('checked', false);
                 $('#addMeeting input[name="reason"]').val('');
+                $('#addMeeting input[name="meeting_type"]').val(1);
                 $('#addMeeting').modal('hide');
                 Swal.fire(
                     'Bom trabalho!',
@@ -352,6 +374,14 @@
                     error,
                     'error'
                 );
+            }
+        });
+        $('input[name=meeting_radio]').on('change', function(){
+            if ($(this).is(':checked')) {
+                var value = $(this).val();
+                $.get('/admin/changeMeetingRadio/' + value).then((resp) => {
+                    location.reload();
+                });
             }
         });
     });

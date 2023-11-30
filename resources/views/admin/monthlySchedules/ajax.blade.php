@@ -51,9 +51,12 @@ $yearCount = 0;
                 tabindex="{{ $monthCount }}">
                 <div class="row">
                     @foreach($month as $meeting)
+                    @if ($meeting->meeting == 1 && session()->get('meeting_radio') == 1 || $meeting->meeting == 2 &&
+                    session()->get('meeting_radio') == 2)
                     <div class="col">
                         <div class="card">
-                            <div class="card-header bg-{{ $meeting->meeting == 1 ? 'info' : 'danger' }} text-white text-uppercase d-flex justify-content-between">
+                            <div
+                                class="card-header bg-{{ $meeting->meeting == 1 ? 'info' : 'danger' }} text-white text-uppercase d-flex justify-content-between">
                                 <h5 class="card-title">Dia {{ \Carbon\Carbon::parse($meeting->date)->day }}</h5>
                                 <div class="btn-group" role="group" aria-label="Basic example">
                                     <button class="btn btn-sm text-white" onclick="editMeeting({{ $meeting->id }})"><i
@@ -107,6 +110,7 @@ $yearCount = 0;
                             @endif
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
                 <a href="/admin/monthToExcel/{{ $month[0]->id }}" class="btn btn-success">Exportar via Excel</a>
@@ -116,4 +120,6 @@ $yearCount = 0;
     </div>
     @endforeach
 </div>
-<script>console.log({!! $lifeMinistries !!})</script>
+<script>
+    console.log({!! $lifeMinistries !!})
+</script>
