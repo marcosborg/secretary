@@ -511,6 +511,10 @@ return [
             'deleted_at_helper'  => ' ',
             'assignments'        => 'Designações',
             'assignments_helper' => ' ',
+            'gender'                => 'Gender',
+            'gender_helper'         => ' ',
+            'responsibility'        => 'Responsibility',
+            'responsibility_helper' => ' ',
         ],
     ],
     'assignment' => [

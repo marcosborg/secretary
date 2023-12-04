@@ -21,6 +21,12 @@
                         <th>
                             Estudante
                         </th>
+                        <th>
+                            Sexo
+                        </th>
+                        <th>
+                            Responsabilidade
+                        </th>
                         <th class="d-none">Posição</th>
                     </tr>
                 </thead>
@@ -51,6 +57,12 @@
                         <td>
                             {{ $lifeMinistryEvent->student->name ?? 'Eliminado' }}
                         </td>
+                        <td>
+                            {{ \App\Models\Student::GENDER_RADIO[$lifeMinistryEvent->student->gender] ?? '' }}
+                        </td>
+                        <td>
+                            {{ \App\Models\Student::RESPONSIBILITY_RADIO[$lifeMinistryEvent->student->responsibility] ?? '' }}
+                        </td>
                         <td class="d-none">
                             {{ $lifeMinistryEvent->position }}
                         </td>
@@ -76,3 +88,4 @@
     });
 </script>
 @endsection
+<script>console.log({!! $lifeMinistries !!})</script>

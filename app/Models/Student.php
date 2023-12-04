@@ -20,8 +20,22 @@ class Student extends Model
         'deleted_at',
     ];
 
+    public const GENDER_RADIO = [
+        'male'   => 'Homem',
+        'female' => 'Mulher',
+    ];
+
+    public const RESPONSIBILITY_RADIO = [
+        'publisher'           => 'Publicador',
+        'pioneer'             => 'Pioneiro',
+        'ministerial_servant' => 'Servo ministerial',
+        'elder'               => 'Ancião',
+    ];
+
     protected $fillable = [
         'name',
+        'gender',
+        'responsibility',
         'created_at',
         'updated_at',
         'deleted_at',

@@ -21,6 +21,12 @@ class StoreStudentRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'gender' => [
+                'required',
+            ],
+            'responsibility' => [
+                'required',
+            ],
             'assignments.*' => [
                 'integer',
             ],

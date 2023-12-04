@@ -28,6 +28,12 @@
                         {{ trans('cruds.student.fields.name') }}
                     </th>
                     <th>
+                        {{ trans('cruds.student.fields.gender') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.student.fields.responsibility') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.student.fields.assignments') }}
                     </th>
                     <th>
@@ -88,6 +94,8 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
+{ data: 'gender', name: 'gender' },
+{ data: 'responsibility', name: 'responsibility' },
 { data: 'assignments', name: 'assignments.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

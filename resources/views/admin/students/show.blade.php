@@ -33,6 +33,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.student.fields.gender') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Student::GENDER_RADIO[$student->gender] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.student.fields.responsibility') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Student::RESPONSIBILITY_RADIO[$student->responsibility] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.student.fields.assignments') }}
                         </th>
                         <td>

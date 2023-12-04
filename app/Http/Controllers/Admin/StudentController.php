@@ -47,6 +47,12 @@ class StudentController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
+            $table->editColumn('gender', function ($row) {
+                return $row->gender ? Student::GENDER_RADIO[$row->gender] : '';
+            });
+            $table->editColumn('responsibility', function ($row) {
+                return $row->responsibility ? Student::RESPONSIBILITY_RADIO[$row->responsibility] : '';
+            });
             $table->editColumn('assignments', function ($row) {
                 $labels = [];
                 foreach ($row->assignments as $assignment) {
