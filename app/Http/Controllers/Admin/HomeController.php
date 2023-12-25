@@ -95,7 +95,7 @@ class HomeController
             'column_class' => 'col-md-3',
             'entries_number' => '5',
             'translation_key' => 'publisher',
-            'total_number' => $month->reports->where('hours', '>', 0)->count(),
+            'total_number' => $month->reports->where('preached', true)->count(),
         ];
 
         $settings2 = [
@@ -112,7 +112,7 @@ class HomeController
             'column_class' => 'col-md-3',
             'entries_number' => '5',
             'translation_key' => 'publisher',
-            'total_number' => $month->reports->where('hours', 0)->count(),
+            'total_number' => $month->reports->where('preached', false)->count(),
         ];
 
         $settings3 = [
