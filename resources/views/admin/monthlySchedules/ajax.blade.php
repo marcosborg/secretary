@@ -46,7 +46,7 @@ $yearCount = 0;
             @php
             $monthCount++;
             @endphp
-            <div class="tab-pane fade show {{ $monthCount == $year->count() ? 'active' : '' }}"
+            <div class="tab-pane fade {{ $monthCount == $year->count() ? 'show active' : '' }}"
                 id="tab-pane-{{ $monthName }}" role="tabpanel" aria-labelledby="tab-{{ $monthName }}"
                 tabindex="{{ $monthCount }}">
                 <div class="row">
@@ -120,6 +120,3 @@ $yearCount = 0;
     </div>
     @endforeach
 </div>
-<script>
-    console.log({!! $lifeMinistries !!})
-</script>
